@@ -267,7 +267,12 @@ public class Allure2ExportFormatter implements ExportFormatter {
         for (int i = 0; i < steps.size(); i++) {
             final StepResult prevStep = steps.get(i == 0 ? 0 : i - 1);
             final StepResult currStep = steps.get(i);
-            if (prevStep.getStop() <= step.getStart() && step.getStop() <= currStep.getStart()) {
+            if (Objects.nonNull(prevStep.getStop())
+                    && Objects.nonNull(step.getStart())
+                    && Objects.nonNull(step.getStop())
+                    && Objects.nonNull(currStep.getStart())
+                    && prevStep.getStop() <= step.getStart()
+                    && step.getStop() <= currStep.getStart()) {
                 position = i;
                 break;
             }
