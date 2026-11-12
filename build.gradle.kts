@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.graalvm.buildtools.native") version "0.9.24"
+    id("org.graalvm.buildtools.native") version "0.10.6"
 }
 
 group = "org.example"
@@ -9,17 +9,18 @@ version = "1.0-SNAPSHOT"
 description = "Allure Server Java Client"
 
 tasks.withType(Wrapper::class) {
-    gradleVersion = "7.5.1"
+    gradleVersion = "9.1.0"
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 
 tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8"
+    options.release.set(11)
 }
 
 graalvmNative {
