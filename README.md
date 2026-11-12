@@ -52,3 +52,24 @@ After exporting, you can generate an Allure report with the following command:
 ```bash
 allure serve /path/to/outputDirectory
 ```
+
+## how to build on mac
+1. install graalvem-jdk
+   download from: https://objectstorage.uk-london-1.oraclecloud.com/p/9we49En3MHNQ4H-UTKifXXThssf4F3CKB5YyNtcsE1m9fKsyHppfK7nxqkjQgNht/n/lr0crfzcb4ml/b/gds-artifacts/o/D53FAE8052773FFAE0530F15000AA6C6/graalvm-jdk-25i5-25.0.5.0.3_macos-aarch64_bin.tar.gz
+```bash
+mkdir -p "$HOME/Library/Java/JavaVirtualMachines"
+tar -xzf ~/Downloads/graalvm-jdk-25i5-25.0.5.0.3_macos-aarch64_bin.tar.gz -C  "$HOME/Library/Java/JavaVirtualMachines"
+
+# add these to ~/.zshrc
+# for using graalvm java 25
+export GRAALVM_HOME="$(dirname "$(dirname "$(find "$HOME/Library/Java/JavaVirtualMachines" -path '*/bin/native-image' -print -quit)")")"
+export JAVA_HOME="$GRAALVM_HOME"
+export PATH="$GRAALVM_HOME/bin:$PATH"
+
+source ~/.zshrc
+native-image --version
+cd xcresults
+./gradlew clean build
+./gradlew nativeCompile
+# then find the binary at: build/native/nativeCompile/xcresults
+```
